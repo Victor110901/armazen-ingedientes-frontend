@@ -1,8 +1,18 @@
 import { PackageCheck } from "lucide-react";
 import { appConfig } from "../../config/app.config";
+import { cn } from "../../utils/cn";
+import { useHealthCheckQuery } from "../../hooks/dashboard/useHealthCheck";
 
 
 export function Topbar() {
+  const { isError, isLoading } = useHealthCheckQuery();
+
+  const statusLabel = isLoading
+    ? "Verificando API"
+    : isError
+      ? "API indisponível"
+      : "API conectada";
+
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-slate-50/85 px-4 py-4 backdrop-blur lg:px-8">
       <div className="flex items-center justify-between gap-4">
@@ -23,8 +33,19 @@ export function Topbar() {
           </p>
         </div>
 
-        <div className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
-          API conectável
+        <div
+          className={cn(
+            "rounded-full border px-3 py-1 text-xs font-semibold",
+            isLoading &&
+              "border-amber-200 bg-amber-50 text-amber-700",
+            isError &&
+              "border-red-200 bg-red-50 text-red-700",
+            !isLoading &&
+              !isError &&
+              "border-emerald-200 bg-emerald-50 text-emerald-700",
+          )}
+        >
+          {statusLabel}
         </div>
       </div>
     </header>
