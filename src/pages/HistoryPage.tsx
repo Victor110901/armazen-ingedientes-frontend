@@ -6,6 +6,7 @@ import { ErrorState } from "../components/common/ErrorState";
 import { HistorySummary } from "../hooks/history/HistorySummary";
 import { HistoryFilters } from "../hooks/history/HistoryFilters";
 import { HistoryTable } from "../hooks/history/HistoryTable";
+import { PageHeader } from "../components/common/PageHeader";
 
 export function HistoryPage() {
   const [sortBy, setSortBy] = useState<HistoricoSortBy>("date");
@@ -22,6 +23,9 @@ export function HistoryPage() {
       <ErrorState
         title="Não foi possível carregar o histórico"
         message="Verifique se a API está disponível e tente novamente."
+        onRetry={() => {
+          void historyQuery.refetch();
+        }}
       />
     );
   }
@@ -30,24 +34,16 @@ export function HistoryPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-            Histórico
-          </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-            Histórico de movimentações
-          </h1>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
-            Acompanhe entradas, saídas, responsáveis, ingredientes e
-            compartimentos movimentados no armazém.
-          </p>
-        </div>
-
-        <div className="rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700">
-          {history.length} registro(s)
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Histórico"
+        title="Histórico de movimentações"
+        description="Acompanhe entradas, saídas, responsáveis, ingredientes e compartimentos movimentados no armazém."
+        action={
+          <div className="rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700">
+            {history.length} registro(s)
+          </div>
+        }
+      />
 
       <HistorySummary history={history} />
 

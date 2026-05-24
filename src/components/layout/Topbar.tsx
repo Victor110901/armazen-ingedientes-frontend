@@ -45,7 +45,18 @@ export function Topbar() {
               "border-emerald-200 bg-emerald-50 text-emerald-700",
           )}
         >
-          {statusLabel}
+          <span className="flex items-center gap-2">
+            <span
+              className={
+                isLoading
+                  ? "size-2 animate-pulse rounded-full bg-amber-500"
+                  : isError
+                    ? "size-2 rounded-full bg-red-500"
+                    : "size-2 rounded-full bg-emerald-500"
+              }
+            />
+            {statusLabel}
+          </span>
         </div>
       </div>
     </header>

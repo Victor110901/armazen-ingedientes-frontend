@@ -8,6 +8,7 @@ import { VolumeByTypeChart } from "../hooks/dashboard/VolumeByTypeChart";
 import { EmptyState } from "../components/common/EmptyState";
 import { formatIngredientType, formatQuantity } from "../utils/formatters";
 import { RecentMovements } from "../hooks/dashboard/RecentMovements";
+import { PageHeader } from "../components/common/PageHeader";
 
 
 function calculateTotalStored(
@@ -40,6 +41,11 @@ export function DashboardPage() {
       <ErrorState
         title="Não foi possível carregar o dashboard"
         message="Verifique se a API está disponível e tente novamente."
+        onRetry={() => {
+          void ingredientsQuery.refetch();
+          void volumeQuery.refetch();
+          void historyQuery.refetch();
+        }}
       />
     );
   }
@@ -55,23 +61,16 @@ export function DashboardPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-            Visão geral
-          </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-            Dashboard do armazém
-          </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600">
-            Acompanhe volumes, compartimentos e movimentações recentes do estoque.
-          </p>
-        </div>
-
-        <div className="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
-          Dados em tempo real da API
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Visão geral"
+        title="Dashboard do armazém"
+        description="Acompanhe volumes, compartimentos e movimentações recentes do estoque."
+        action={
+          <div className="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
+            Dados em tempo real da API
+          </div>
+        }
+      />
 
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <MetricCard
