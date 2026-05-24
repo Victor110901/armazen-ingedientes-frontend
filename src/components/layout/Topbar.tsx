@@ -7,12 +7,6 @@ import { useHealthCheckQuery } from "../../hooks/dashboard/useHealthCheck";
 export function Topbar() {
   const { isError, isLoading } = useHealthCheckQuery();
 
-  const statusLabel = isLoading
-    ? "Verificando API"
-    : isError
-      ? "API indisponível"
-      : "API conectada";
-
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-slate-50/85 px-4 py-4 backdrop-blur lg:px-8">
       <div className="flex items-center justify-between gap-4">
@@ -31,21 +25,6 @@ export function Topbar() {
           <p className="text-sm font-medium text-slate-500">
             Sistema de gerenciamento de estoque
           </p>
-        </div>
-
-        <div
-          className={cn(
-            "rounded-full border px-3 py-1 text-xs font-semibold",
-            isLoading &&
-              "border-amber-200 bg-amber-50 text-amber-700",
-            isError &&
-              "border-red-200 bg-red-50 text-red-700",
-            !isLoading &&
-              !isError &&
-              "border-emerald-200 bg-emerald-50 text-emerald-700",
-          )}
-        >
-          {statusLabel}
         </div>
       </div>
     </header>

@@ -5,6 +5,7 @@ import { useAvailableCompartmentsForSaleQuery, useAvailableCompartmentsQuery } f
 import { StorageAvailabilityForm } from "../hooks/compartments/StorageAvailabilityForm";
 import { SaleAvailabilityForm } from "../hooks/compartments/SaleAvailabilityForm";
 import { CompartmentsResultGrid } from "../hooks/compartments/CompartmentsResultGrid";
+import { PageHeader } from "../components/common/PageHeader";
 
 export function CompartmentsPage() {
   const [storageParams, setStorageParams] =
@@ -28,21 +29,11 @@ export function CompartmentsPage() {
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
-        <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-            Compartimentos
-          </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
-            Disponibilidade dos compartimentos
-          </h1>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600">
-            Consulte espaços disponíveis para armazenamento e compartimentos com
-            estoque disponível para retirada, respeitando as regras de tipo e
-            capacidade.
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Compartimentos"
+        title="Disponibilidade dos compartimentos"
+        description="Consulte espaços disponíveis para armazenamento e compartimentos com estoque disponível para retirada, respeitando as regras de tipo e capacidade."
+      />
 
       <div className="grid gap-6 xl:grid-cols-2">
         <StorageAvailabilityForm
