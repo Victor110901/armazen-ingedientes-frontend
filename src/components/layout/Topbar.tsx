@@ -1,7 +1,6 @@
 import { PackageCheck } from "lucide-react";
 import { appConfig } from "../../config/app.config";
 
-
 export function Topbar() {
 
   return (
