@@ -46,6 +46,10 @@ export function useCreateIngredientMutation() {
       void queryClient.invalidateQueries({
         queryKey: queryKeys.history.all,
       });
+
+      void queryClient.invalidateQueries({
+        queryKey: ["compartments"],
+      });
     },
     onError: (error) => {
       toast.error(getApiErrorMessage(error));
@@ -78,6 +82,10 @@ export function useAddIngredientEntryMutation() {
       void queryClient.invalidateQueries({
         queryKey: queryKeys.history.all,
       });
+
+      void queryClient.invalidateQueries({
+        queryKey: ["compartments"],
+      });
     },
     onError: (error) => {
       toast.error(getApiErrorMessage(error));
@@ -109,6 +117,10 @@ export function useRegisterIngredientExitMutation() {
 
       void queryClient.invalidateQueries({
         queryKey: queryKeys.history.all,
+      });
+
+      void queryClient.invalidateQueries({
+        queryKey: ["compartments"],
       });
     },
     onError: (error) => {
