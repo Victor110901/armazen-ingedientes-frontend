@@ -1,11 +1,8 @@
 import { PackageCheck } from "lucide-react";
 import { appConfig } from "../../config/app.config";
-import { cn } from "../../utils/cn";
-import { useHealthCheckQuery } from "../../hooks/dashboard/useHealthCheck";
 
 
 export function Topbar() {
-  const { isError, isLoading } = useHealthCheckQuery();
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-slate-50/85 px-4 py-4 backdrop-blur lg:px-8">
