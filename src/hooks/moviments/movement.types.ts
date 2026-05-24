@@ -1,0 +1,1 @@
+export type MovementOperation = "entrada" | "saida";
