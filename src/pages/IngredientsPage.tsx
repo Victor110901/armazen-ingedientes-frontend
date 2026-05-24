@@ -4,6 +4,7 @@ import { IngredientForm } from "../hooks/ingredients/IngredientForm";
 import { IngredientsSummary } from "../hooks/ingredients/IngredientsSummary";
 import { IngredientsTable } from "../hooks/ingredients/IngredientsTable";
 import { useIngredientsQuery } from "../hooks/ingredients/useIngredients";
+import { MovementsPanel } from "../hooks/moviments/MovementsPanel";
 
 export function IngredientsPage() {
   const ingredientsQuery = useIngredientsQuery();
@@ -51,6 +52,8 @@ export function IngredientsPage() {
 
         <IngredientsTable ingredients={ingredients} />
       </div>
+
+      <MovementsPanel ingredients={ingredients} />
     </section>
   );
 }
