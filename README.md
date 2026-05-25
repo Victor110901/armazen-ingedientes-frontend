@@ -130,7 +130,7 @@ src
 │   ├── layout
 │   └── ui
 ├── config
-├── features
+├── hooks
 │   ├── compartments
 │   ├── dashboard
 │   ├── history
@@ -153,7 +153,7 @@ Responsabilidades:
 | `components/common` | Componentes reutilizáveis |
 | `components/layout` | Layout principal, sidebar, topbar e navegação mobile |
 | `config` | Configurações de rotas, domínio e aplicação |
-| `features` | Funcionalidades organizadas por domínio |
+| `hooks` | Funcionalidades organizadas por domínio |
 | `services` | Cliente HTTP e comunicação com a API |
 | `types` | Contratos TypeScript da API |
 | `utils` | Formatadores e utilitários |
@@ -186,10 +186,10 @@ src/services/health.service.ts
 Hooks principais:
 
 ```txt
-src/features/ingredients/useIngredients.ts
-src/features/compartments/useCompartments.ts
-src/features/history/useHistory.ts
-src/features/dashboard/useHealthCheck.ts
+src/hooks/ingredients/useIngredients.ts
+src/hooks/compartments/useCompartments.ts
+src/hooks/history/useHistory.ts
+src/hooks/dashboard/useHealthCheck.ts
 ```
 
 ---
@@ -263,15 +263,14 @@ npm run preview
 ## Fluxo recomendado para avaliação
 
 1. Acessar o frontend em produção.
-2. Verificar o status da API no topo da aplicação.
-3. Abrir o Dashboard.
-4. Ir para Ingredientes.
-5. Cadastrar um ingrediente.
-6. Registrar uma entrada.
-7. Registrar uma saída.
-8. Consultar o histórico.
-9. Consultar compartimentos disponíveis.
-10. Acessar o Swagger da API para validar os endpoints diretamente.
+2. Abrir o Dashboard.
+3. Ir para Ingredientes.
+4. Cadastrar um ingrediente.
+5. Registrar uma entrada.
+6. Registrar uma saída.
+7. Consultar o histórico.
+8. Consultar compartimentos disponíveis.
+9. Acessar o Swagger da API para validar os endpoints diretamente.
 
 ---
 
