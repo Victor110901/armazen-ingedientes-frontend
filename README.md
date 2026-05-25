@@ -47,7 +47,7 @@ A interface permite:
 
 | Recurso | URL |
 |---|---|
-| Frontend em produção | `https://armazem-frontend-one.vercel.app` |
+| Frontend em produção | `https://armazen-ingedientes-frontend.vercel.app/` |
 | Backend em produção | `https://armazen-ingedientes-backend.onrender.com` |
 | Swagger da API | `https://armazen-ingedientes-backend.onrender.com/swagger-ui/index.html` |
 | Health check da API | `https://armazen-ingedientes-backend.onrender.com/health` |
