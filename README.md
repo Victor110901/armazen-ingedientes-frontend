@@ -1,73 +1,312 @@
-# React + TypeScript + Vite
+# Armazém de Ingredientes Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface web responsiva desenvolvida em **React**, **TypeScript** e **Vite** para gerenciamento de estoque de ingredientes, compartimentos e movimentações de um armazém.
 
-Currently, two official plugins are available:
+O projeto consome uma API RESTful desenvolvida em Java com Spring Boot e foi construído com foco em organização, integração real, responsividade, validações, feedbacks visuais e experiência profissional para avaliação técnica.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Sumário
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [Visão geral](#visão-geral)
+- [Links do projeto](#links-do-projeto)
+- [Tecnologias](#tecnologias)
+- [Funcionalidades](#funcionalidades)
+- [Arquitetura](#arquitetura)
+- [Integração com a API](#integração-com-a-api)
+- [Como executar localmente](#como-executar-localmente)
+- [Como gerar build](#como-gerar-build)
+- [Rotas do frontend](#rotas-do-frontend)
+- [Fluxo recomendado para avaliação](#fluxo-recomendado-para-avaliação)
+- [Decisões técnicas](#decisões-técnicas)
+- [Autor](#autor)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Visão geral
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+O frontend permite gerenciar visualmente um armazém de ingredientes composto por 5 compartimentos fixos.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+A interface permite:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Visualizar dashboard com dados reais da API.
+- Consultar ingredientes cadastrados.
+- Cadastrar novos ingredientes.
+- Registrar entrada de estoque.
+- Registrar saída de estoque.
+- Consultar compartimentos disponíveis para armazenamento.
+- Consultar compartimentos disponíveis para venda/retirada.
+- Visualizar histórico completo de movimentações.
+- Ordenar histórico por data ou compartimento.
+- Acompanhar status da API.
+- Usar a aplicação em desktop, tablet e celular.
+
+---
+
+## Links do projeto
+
+| Recurso | URL |
+|---|---|
+| Frontend em produção | `https://armazem-frontend-one.vercel.app` |
+| Backend em produção | `https://armazen-ingedientes-backend.onrender.com` |
+| Swagger da API | `https://armazen-ingedientes-backend.onrender.com/swagger-ui/index.html` |
+| Health check da API | `https://armazen-ingedientes-backend.onrender.com/health` |
+
+Observação: o backend está hospedado no plano gratuito do Render. A primeira requisição após um período de inatividade pode demorar alguns segundos enquanto o serviço reinicia.
+
+---
+
+## Tecnologias
+
+- React
+- TypeScript
+- Vite
+- React Router DOM
+- TanStack Query
+- Axios
+- React Hook Form
+- Zod
+- Tailwind CSS
+- Recharts
+- Lucide React
+- Sonner
+- Vercel
+
+---
+
+## Funcionalidades
+
+### Dashboard
+
+- Cards de resumo.
+- Total de ingredientes.
+- Compartimentos ativos.
+- Volume total armazenado.
+- Quantidade de movimentações.
+- Gráfico de volume por tipo.
+- Últimas movimentações.
+
+### Ingredientes
+
+- Listagem de ingredientes cadastrados.
+- Cadastro de ingrediente.
+- Validação de formulário.
+- Feedback de sucesso e erro.
+- Tratamento de erros retornados pela API.
+
+### Movimentações
+
+- Registro de entrada de estoque.
+- Registro de saída de estoque.
+- Atualização automática dos dados após movimentação.
+- Tratamento de regras de negócio, como saída maior que o estoque disponível.
+
+### Compartimentos
+
+- Consulta de compartimentos disponíveis para armazenamento.
+- Consulta de compartimentos disponíveis para venda/retirada.
+- Cards com quantidade atual, capacidade, espaço livre e motivo de disponibilidade.
+
+### Histórico
+
+- Listagem completa de movimentações.
+- Ordenação por data.
+- Ordenação por compartimento.
+- Ordem crescente ou decrescente.
+- Badges para entrada, saída e tipo de ingrediente.
+
+---
+
+## Arquitetura
+
+Estrutura principal:
+
+```txt
+src
+├── app
+├── assets
+├── components
+│   ├── common
+│   ├── layout
+│   └── ui
+├── config
+├── features
+│   ├── compartments
+│   ├── dashboard
+│   ├── history
+│   ├── ingredients
+│   └── movements
+├── hooks
+├── lib
+├── pages
+├── services
+├── styles
+├── types
+└── utils
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Responsabilidades:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Pasta | Responsabilidade |
+|---|---|
+| `app` | Configuração global da aplicação, providers e rotas |
+| `components/common` | Componentes reutilizáveis |
+| `components/layout` | Layout principal, sidebar, topbar e navegação mobile |
+| `config` | Configurações de rotas, domínio e aplicação |
+| `features` | Funcionalidades organizadas por domínio |
+| `services` | Cliente HTTP e comunicação com a API |
+| `types` | Contratos TypeScript da API |
+| `utils` | Formatadores e utilitários |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## Integração com a API
+
+A URL da API é configurada por variável de ambiente:
+
+```env
+VITE_API_URL=https://armazen-ingedientes-backend.onrender.com
 ```
+
+O cliente HTTP centralizado fica em:
+
+```txt
+src/services/api.ts
+```
+
+Services principais:
+
+```txt
+src/services/ingredient.service.ts
+src/services/compartment.service.ts
+src/services/history.service.ts
+src/services/health.service.ts
+```
+
+Hooks principais:
+
+```txt
+src/features/ingredients/useIngredients.ts
+src/features/compartments/useCompartments.ts
+src/features/history/useHistory.ts
+src/features/dashboard/useHealthCheck.ts
+```
+
+---
+
+## Como executar localmente
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/Victor110901/armazen-ingedientes-frontend.git
+```
+
+Entre na pasta:
+
+```bash
+cd armazem-frontend
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Crie o arquivo `.env.local`:
+
+```env
+VITE_API_URL=https://armazen-ingedientes-backend.onrender.com
+```
+
+Rode o projeto:
+
+```bash
+npm run dev
+```
+
+Acesse:
+
+```txt
+http://localhost:5173
+```
+
+---
+
+## Como gerar build
+
+```bash
+npm run build
+```
+
+Para pré-visualizar o build localmente:
+
+```bash
+npm run preview
+```
+
+---
+
+## Rotas do frontend
+
+| Rota | Tela |
+|---|---|
+| `/` | Dashboard |
+| `/ingredientes` | Gestão de ingredientes |
+| `/compartimentos` | Consulta de compartimentos |
+| `/historico` | Histórico de movimentações |
+| `/sobre` | Informações do projeto |
+
+---
+
+## Fluxo recomendado para avaliação
+
+1. Acessar o frontend em produção.
+2. Verificar o status da API no topo da aplicação.
+3. Abrir o Dashboard.
+4. Ir para Ingredientes.
+5. Cadastrar um ingrediente.
+6. Registrar uma entrada.
+7. Registrar uma saída.
+8. Consultar o histórico.
+9. Consultar compartimentos disponíveis.
+10. Acessar o Swagger da API para validar os endpoints diretamente.
+
+---
+
+## Decisões técnicas
+
+### React + Vite
+
+O projeto utiliza Vite pela simplicidade, velocidade de desenvolvimento e facilidade de deploy como aplicação estática.
+
+### TypeScript
+
+Todos os contratos principais da API foram tipados, reduzindo risco de integração incorreta.
+
+### TanStack Query
+
+Utilizado para cache, loading, refetch e sincronização dos dados após mutations.
+
+### React Hook Form + Zod
+
+Utilizados para validação de formulários com mensagens claras e tipadas.
+
+### Axios
+
+Cliente HTTP centralizado para comunicação com o backend.
+
+### Tailwind CSS
+
+Utilizado para criação rápida de uma interface responsiva, consistente e sem dependência pesada de componentes externos.
+
+### Separação por features
+
+As funcionalidades foram organizadas por domínio, facilitando manutenção e evolução.
+
+---
+
+## Autor
+
+Victor Campolina
