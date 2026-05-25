@@ -1,7 +1,11 @@
 import { Boxes, CalendarDays, PackageCheck } from "lucide-react";
 import type { CompartimentoDisponivelResponse } from "../../types/compartment.types";
 import { IngredientTypeBadge } from "../../components/common/IngredientTypeBadge";
-import { formatDate, formatQuantity } from "../../utils/formatters";
+import {
+  formatDate,
+  formatQuantitiesInText,
+  formatQuantity,
+} from "../../utils/formatters";
 
 interface CompartmentCardProps {
   compartment: CompartimentoDisponivelResponse;
@@ -79,7 +83,7 @@ export function CompartmentCard({ compartment }: CompartmentCardProps) {
       </div>
 
       <p className="mt-5 text-sm leading-6 text-slate-500">
-        {compartment.motivo}
+        {formatQuantitiesInText(compartment.motivo)}
       </p>
     </article>
   );
