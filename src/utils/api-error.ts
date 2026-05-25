@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { ApiErrorResponse } from "../types/api.types";
+import { formatQuantitiesInText } from "./formatters";
 
 
 export function isApiErrorResponse(value: unknown): value is ApiErrorResponse {
@@ -16,10 +17,12 @@ export function getApiErrorMessage(error: unknown): string {
 
     if (isApiErrorResponse(data)) {
       if (data.fieldErrors && data.fieldErrors.length > 0) {
-        return data.fieldErrors.map((fieldError) => fieldError.message).join(" ");
+        return formatQuantitiesInText(
+          data.fieldErrors.map((fieldError) => fieldError.message).join(" "),
+        );
       }
 
-      return data.message;
+      return formatQuantitiesInText(data.message);
     }
 
     if (error.response?.status === 404) {
@@ -36,7 +39,7 @@ export function getApiErrorMessage(error: unknown): string {
   }
 
   if (error instanceof Error) {
-    return error.message;
+    return formatQuantitiesInText(error.message);
   }
 
   return "Ocorreu um erro inesperado.";
